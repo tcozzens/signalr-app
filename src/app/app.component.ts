@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
-      .withUrl('http://localhost:5000/notify')
+      .withUrl('http://signalrapi-prod.us-east-1.elasticbeanstalk.com/notify')
       .build();
 
     // tslint:disable-next-line: only-arrow-functions
