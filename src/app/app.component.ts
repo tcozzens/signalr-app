@@ -20,10 +20,10 @@ export class AppComponent implements OnInit {
       .build();
 
     // tslint:disable-next-line: only-arrow-functions
-    connection.start().then(function() {
+    connection.start().then(function () {
       console.log('Connected!');
       // tslint:disable-next-line: only-arrow-functions
-    }).catch(function(err) {
+    }).catch(function (err) {
       return console.error(err.toString());
     });
 
