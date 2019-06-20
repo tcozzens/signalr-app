@@ -1,3 +1,6 @@
+import { ConferenceScheduleModule } from './conference-schedule/conference-schedule.module';
+import { SignalrModule } from './signalr/signalr.module';
+import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,8 +14,11 @@ import { CustomMaterialsModule } from './custom-materials.module';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
-    CustomMaterialsModule
+    CustomMaterialsModule,
+    SignalrModule,
+    ConferenceScheduleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
