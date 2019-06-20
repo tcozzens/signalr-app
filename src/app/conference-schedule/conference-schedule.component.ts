@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ConferenceScheduleService } from './conference-schedule.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-conference-schedule',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./conference-schedule.component.css']
 })
 export class ConferenceScheduleComponent implements OnInit {
+  conferenceData;
 
-  constructor() { }
+  constructor(private conferenceScheduleService: ConferenceScheduleService) { }
 
   ngOnInit() {
+    this.conferenceData = this.conferenceScheduleService.getConferences().pipe(
+      map((conference: any) => {
+        return conference;
+      })
+    );
   }
 
 }
