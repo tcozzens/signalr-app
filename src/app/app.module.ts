@@ -1,10 +1,9 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-
-import { ToastModule } from 'primeng/toast';
 
 import { AppComponent } from './app.component';
+import { CustomMaterialsModule } from './custom-materials.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ToastModule
+    CustomMaterialsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
