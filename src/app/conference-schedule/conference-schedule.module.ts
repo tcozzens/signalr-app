@@ -1,3 +1,4 @@
+import { CustomMaterialsModule } from './../custom-materials.module';
 import { ConferenceScheduleService } from './conference-schedule.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +9,8 @@ import { ConferenceScheduleComponent } from './conference-schedule.component';
     ConferenceScheduleComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CustomMaterialsModule
   ],
   providers: [
     ConferenceScheduleService

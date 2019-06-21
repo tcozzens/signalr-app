@@ -1,5 +1,20 @@
-<p>
-  conference-schedule works!
-</p>
+<div class="ma4">
+  <mat-form-field color="accent">
+    <mat-label>Select an option</mat-label>
+    <mat-select>
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let conference of conferenceData | async" [value]="conference.name"
+        (click)="conferenceSelected(conference.name)">{{conference.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <ng-container *ngFor="let session of conferenceSessions | async">
+    <!-- {{session.name}} -->
+    <mat-grid-list cols="{{conferenceSessions | async}}.length" rowHeight="100px" [style.background]="'grey'" class="mb2">
+      <mat-grid-tile>
+        {{session.name}}
+      </mat-grid-tile>
+    </mat-grid-list>
 
-{{conferenceData | async}}
+  </ng-container>
+</div>

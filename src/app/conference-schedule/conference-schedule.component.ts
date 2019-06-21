@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConferenceScheduleService } from './conference-schedule.service';
-import { map } from 'rxjs/operators';
+import { find, tap, map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-conference-schedule',
@@ -9,15 +9,18 @@ import { map } from 'rxjs/operators';
 })
 export class ConferenceScheduleComponent implements OnInit {
   conferenceData;
+  conferenceSessions;
 
   constructor(private conferenceScheduleService: ConferenceScheduleService) { }
 
   ngOnInit() {
-    this.conferenceData = this.conferenceScheduleService.getConferences().pipe(
-      map((conference: any) => {
-        return conference;
-      })
-    );
+    this.conferenceData = this.conferenceScheduleService.getConferences();
   }
 
+  conferenceSelected(conferenceName) {
+    this.conferenceSessions = this.conferenceData.pipe(
+      map((conferences: any) => conferences.find(conference => conference.name === conferenceName)),
+      map((x: any) => x.sessions)
+    );
+  }
 }
