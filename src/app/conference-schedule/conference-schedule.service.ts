@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
   constructor(private http: HttpClient) { }
 
   getConferences() {
-    return this.http.get('http://conference-data-api-dev.us-east-1.elasticbeanstalk.com/conferences');
+    // return this.http.get('http://conference-data-api-dev.us-east-1.elasticbeanstalk.com/conferences');
+    return this.http.get('http://localhost:3000/conferences');
   }
 }

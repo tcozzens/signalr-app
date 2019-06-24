@@ -8,13 +8,22 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <ng-container *ngFor="let session of conferenceSessions | async">
-    <!-- {{session.name}} -->
-    <mat-grid-list cols="{{conferenceSessions | async}}.length" rowHeight="100px" [style.background]="'grey'" class="mb2">
-      <mat-grid-tile>
-        {{session.name}}
-      </mat-grid-tile>
-    </mat-grid-list>
-
-  </ng-container>
+  <div class="flex flex-wrap justify-around items-start content-start">
+    <mat-card *ngFor="let session of conferenceSessions | async" class="w-30 dib mb4">
+      <mat-card-header>
+        <!-- <div mat-card-avatar></div> -->
+        <mat-card-title>{{session.name}}</mat-card-title>
+        <mat-card-subtitle>
+          {{session.startsAt |  date:'medium' }}-{{session.endsAt | date:'medium' }}
+        </mat-card-subtitle>
+        <mat-card-subtitle>{{session.presenters}}</mat-card-subtitle>
+      </mat-card-header>
+      <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+      <mat-card-content>
+        <p>
+          {{session.description | slice:0:100}}...
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
