@@ -1,32 +1,28 @@
-<div class="ma4">
-  <mat-form-field color="accent">
-    <mat-label>Select an option</mat-label>
-    <mat-select>
-      <mat-option>None</mat-option>
-      <mat-option *ngFor="let conference of conferenceData | async" [value]="conference.name"
-        (click)="conferenceSelected(conference.name)">{{conference.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <div class="flex flex-wrap justify-around items-start content-start">
-    <mat-card *ngFor="let session of conferenceSessions | async" class="w-30 dib mb4">
-      <mat-card-header>
-        <!-- <div mat-card-avatar></div> -->
-        <mat-card-title>{{session.name}}</mat-card-title>
-        <mat-card-subtitle>
-          {{session.startsAt |  date:'medium' }}-{{session.endsAt | date:'medium' }}
-        </mat-card-subtitle>
-        <mat-card-subtitle>{{session.presenters}}</mat-card-subtitle>
-      </mat-card-header>
-      <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-      <mat-card-content>
-        <p>
-          {{session.description | slice:0:100}}...
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        Click to read full description
-      </mat-card-actions>
-    </mat-card>
-  </div>
+<mat-form-field color="accent">
+  <mat-label>Select an option</mat-label>
+  <mat-select>
+    <mat-option>None</mat-option>
+    <mat-option *ngFor="let conference of conferenceData | async" [value]="conference.name"
+      (click)="conferenceSelected(conference.name)">{{conference.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div class="flex flex-wrap justify-around items-start content-start">
+  <mat-card *ngFor="let session of conferenceSessions | async" class="w-30 dib mb4">
+    <mat-card-header>
+      <mat-card-title>{{session.name}}</mat-card-title>
+      <mat-card-subtitle>
+        {{session.startsAt |  date:'medium' }}-{{session.endsAt | date:'medium' }}
+      </mat-card-subtitle>
+      <mat-card-subtitle>{{session.presenters}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{session.description | slice:0:100}}...
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      Click to read full description
+    </mat-card-actions>
+  </mat-card>
 </div>

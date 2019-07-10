@@ -1,3 +1,11 @@
-<p>
-  signalr works!
-</p>
+<div class="w-50">
+  <mat-form-field class="w-100">
+    <input matInput placeholder="User Name" [formControl]="userName">
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <textarea matInput placeholder="Message" [formControl]="message"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button (click)="open()">Submit</button>
+</div>
