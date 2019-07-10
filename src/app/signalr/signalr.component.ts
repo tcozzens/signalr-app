@@ -30,8 +30,7 @@ export class SignalrComponent implements OnInit {
 
     connection.on('BroadcastMessage', (type: string, payload: string) => {
       const payloadObject = JSON.parse(payload);
-
-      this.snackBar.open(payloadObject.Message, 'Close', { duration: 3000 });
+      this.snackBar.open(payloadObject.message, 'Close', { duration: 3000 });
     });
   }
 
@@ -39,8 +38,10 @@ export class SignalrComponent implements OnInit {
     this.http.post('http://localhost:5000/api/message',
       {
         Type: 'message',
-        Payload: JSON.stringify({ UserName: this.userName.value, Message: this.message.value, Date: new Date().toUTCString() })
-      }).subscribe();
+        Payload: JSON.stringify({ username: this.userName.value, message: this.message.value, timestamp: new Date().toUTCString() })
+      },
+      { responseType: 'text' }
+    ).subscribe();
   }
 
 }
