@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as signalR from '@aspnet/signalr';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { SignalRService } from './signalr.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signalr',
@@ -12,10 +15,15 @@ import { FormControl } from '@angular/forms';
 export class SignalrComponent implements OnInit {
   userName = new FormControl('');
   message = new FormControl('');
+  previousMessages: [];
 
-  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
+  constructor(private snackBar: MatSnackBar, private http: HttpClient, private signalrService: SignalRService) { }
 
   ngOnInit(): void {
+    this.signalrService.getPreviousMessages().pipe(
+      map((messages: []) => this.previousMessages = messages)
+    ).subscribe();
+
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
       .withUrl('http://localhost:5000/notify')
