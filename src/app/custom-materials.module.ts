@@ -3,7 +3,7 @@ import {
   MatSnackBarModule, MatToolbarModule, MatIconModule,
   MatFormFieldModule, MatOptionModule, MatSelectModule,
   MatCheckboxModule, MatGridListModule, MatCardModule,
-  MatInputModule, MatButtonModule
+  MatInputModule, MatButtonModule, MatTableModule
 } from '@angular/material';
 
 @NgModule({
@@ -11,13 +11,13 @@ import {
     MatSnackBarModule, MatToolbarModule, MatIconModule,
     MatFormFieldModule, MatOptionModule, MatSelectModule,
     MatCheckboxModule, MatGridListModule, MatCardModule,
-    MatInputModule, MatButtonModule
+    MatInputModule, MatButtonModule, MatTableModule
   ],
   exports: [
     MatSnackBarModule, MatToolbarModule, MatIconModule,
     MatFormFieldModule, MatOptionModule, MatSelectModule,
     MatCheckboxModule, MatGridListModule, MatCardModule,
-    MatInputModule, MatButtonModule
+    MatInputModule, MatButtonModule, MatTableModule
   ]
 })
 export class CustomMaterialsModule { }

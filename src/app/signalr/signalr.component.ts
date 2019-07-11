@@ -1,11 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import * as signalR from '@aspnet/signalr';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+
 import { SignalRService } from './signalr.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signalr',
@@ -13,23 +11,24 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./signalr.component.css']
 })
 export class SignalrComponent implements OnInit {
-  userName = new FormControl('');
-  message = new FormControl('');
-  previousMessages: [];
+  submitForm = this.formBuilder.group({
+    userName: ['', Validators.required],
+    message: ['', Validators.required]
+  });
 
-  constructor(private snackBar: MatSnackBar, private http: HttpClient, private signalrService: SignalRService) { }
+  previousMessages = new BehaviorSubject([]);
+
+  displayedColumns: string[] = ['timestamp', 'username', 'message'];
+
+  constructor(private formBuilder: FormBuilder, private signalrService: SignalRService) { }
 
   ngOnInit(): void {
     this.signalrService.getPreviousMessages().pipe(
-      map((messages: []) => this.previousMessages = messages)
+      map((messages) => this.previousMessages.next(JSON.parse(messages.body))),
+      take(1)
     ).subscribe();
 
-    const connection = new signalR.HubConnectionBuilder()
-      .configureLogging(signalR.LogLevel.Information)
-      .withUrl('http://localhost:5000/notify')
-      // For prod
-      // .withUrl('http://signalrapi-prod.us-east-1.elasticbeanstalk.com/notify')
-      .build();
+    const connection = this.signalrService.buildSignalRConnection();
 
     connection
       .start()
@@ -37,19 +36,19 @@ export class SignalrComponent implements OnInit {
       .catch(err => console.log(err.toString()));
 
     connection.on('BroadcastMessage', (type: string, payload: string) => {
-      const payloadObject = JSON.parse(payload);
-      this.snackBar.open(payloadObject.message, 'Close', { duration: 3000 });
+      this.signalrService.getPreviousMessages().pipe(
+        map((messages) => this.previousMessages.next(JSON.parse(messages.body)))
+      ).subscribe();
     });
   }
 
   open() {
-    this.http.post('http://localhost:5000/api/message',
-      {
-        Type: 'message',
-        Payload: JSON.stringify({ username: this.userName.value, message: this.message.value, timestamp: new Date().toUTCString() })
-      },
-      { responseType: 'text' }
-    ).subscribe();
-  }
+    this.signalrService.submitNewMessage(this.submitForm.controls.userName.value, this.submitForm.controls.message.value)
+      .pipe(
+        take(1)
+      )
+      .subscribe();
 
+    this.submitForm.controls.message.reset();
+  }
 }
